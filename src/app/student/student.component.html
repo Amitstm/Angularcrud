@@ -1,0 +1,71 @@
+<div class="container">
+  <div class="row">
+    <div class="search-hero">
+      <input class="form-control" type="text" name="search" [(ngModel)]="searchText" autocomplete="off"
+        placeholder="&#61442;  Start searching by firstname, email or lastname">
+    </div>
+    <h5>Drag and Drop by Column</h5>
+    <div class="col-md-12">
+      <table class="table" id="table">
+
+        <thead class="thead-dark">
+          <tr>
+            <th>firstName</th>
+            <th>Last Name</th>
+            <th>Email</th>
+            <th></th>
+            <th></th>
+          </tr>
+          <tr>
+            <td>
+              <input type="text" name="firstname" [(ngModel)]="newStudent.firstname" />
+
+            </td>
+            <td>
+              <input type="text" [(ngModel)]="newStudent.lastname">
+            </td>
+            <td>
+              <input type="email" [(ngModel)]="newStudent.email" />
+            </td>
+            <td>
+              <button (click)="addStudent()">Add</button>
+            </td>
+            <td>
+              <button (click)="clearNewStudent()">Cancel</button>
+            </td>
+          </tr>
+
+          <tr *ngFor="let student of students |  filter:searchText" [attr.data-id]="student.id">
+            <td>
+              <input type=" text" *ngIf="student.editing" [(ngModel)]="oldStudent.firstname" />
+              <span *ngIf="!student.editing">
+                {{student.firstname}}
+              </span>
+            </td>
+            <td>
+              <input type="text" *ngIf="student.editing" [(ngModel)]="oldStudent.lastname" />
+              <span *ngIf="!student.editing">{{student.lastname}}</span>
+            </td>
+            <td>
+              <input type="text" *ngIf="student.editing" [(ngModel)]="oldStudent.email" />
+              <span *ngIf="!student.editing">{{student.email}}</span>
+            </td>
+            <td>
+              <button *ngIf="student.editing" (click)="updateStudent();student.editing=false">Update</button>
+              <button *ngIf="!student.editing" (click)="student.editing=true;getStudent(student.id);">Edit</button>
+            </td>
+            <td>
+              <button *ngIf="student.editing" (click)="student.editing=false">Cancel</button>
+              <button *ngIf="!student.editing" (click)="deleteStudent(student.id)">Delete</button>
+            </td>
+
+          </tr>
+
+        </thead>
+      </table>
+    </div>
+  </div>
+</div>
+<div class="clear">
+  <button (click)="clearAllStudents();">Clear All Students</button>
+</div>
