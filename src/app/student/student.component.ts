@@ -28,7 +28,7 @@ export class StudentComponent implements OnInit {
 
   editing = false;
   table: any;
-searchText:any
+ searchText:any
   constructor(service: StudentService) {
     this.service = service;
   }
