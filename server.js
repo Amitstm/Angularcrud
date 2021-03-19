@@ -1,15 +1,35 @@
-//Install express server
+// Get dependencies
 const express = require('express');
 const path = require('path');
+const cors = require('cors');
+const http = require('http');
+
 
 const app = express();
 
-// Serve only the static files form the dist directory
-app.use(express.static('./dist/crud-angular'));
+// allow cross origin
+app.use(cors());
+// Point static path to dist
+app.use(express.static(path.join(__dirname, 'dist')));
 
-app.get('/*', (req, res) =>
-    res.sendFile('index.html', {root: 'dist/crud-angular/'}),
-);
+// Catch all other routes and return the index file
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'dist/angular/index.html'));
+});
 
-// Start the app by listening on the default Heroku port
+/**
+ * Get port from environment and store in Express.
+ */
+// const port = config.get('serverPort');
+// app.set('port', 8081);
+// // app.listen(process.env.PORT || 8080);
+// /**
+//  * Create HTTP server.
+//  */
+// const server = http.createServer(app);
+
+// /**
+//  * Listen on provided port, on all network interfaces.
+//  */
+// server.listen(port, () => console.log(`API running on ${config.get('hostAddress')}:${port}`));
 app.listen(process.env.PORT || 8080);
